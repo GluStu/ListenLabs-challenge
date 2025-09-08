@@ -37,48 +37,22 @@ accepted = 0
 acc_attr = {"T": 0, "W": 0, "C": 0, "B": 0}
 
 def decide(candidate):  # candidate is a dict {"T":0/1, "W":0/1, "C":0/1, "B":0/1}
-    # global accepted, acc_attr
-
-    # S = K - accepted
-    # r = {j: max(0, MIN_REQ[j] - acc_attr[j]) for j in MIN_REQ}
-
-    # # 1) hard locks
-    # locked = [j for j in r if r[j] == S]
-    # if locked and not all(candidate[j] == 1 for j in locked):
-    #     return True
-
-    # # 2) mandatory pair guardrail
-    # attrs = ["T","W","C","B"]
-    # for i in range(len(attrs)):
-    #     for j in range(i+1,len(attrs)):
-    #         ni = attrs[i]; nj = attrs[j]
-    #         need_pair = max(0, r[ni] + r[nj] - S)
-    #         if need_pair > 0 and candidate[ni] == 0 and candidate[nj] == 0:
-    #             return False
-
-    # # 3) greedy accept
-    # accepted += 1
-    # for j in MIN_REQ:
-    #     if candidate[j] == 1:
-    #         acc_attr[j] += 1
-    # return True
-
     global accepted, acc_attr
 
     S = K - accepted
     r = {j: max(0, MIN_REQ[j] - acc_attr[j]) for j in MIN_REQ}
 
-    # 1) hard locks: if any attribute needs exactly S more, it is mandatory
+    # hard locks: if any attribute needs exactly S more, it is mandatory
     locked = [j for j in r if r[j] == S and r[j] > 0]
     if locked and not all(candidate.get(j, 0) == 1 for j in locked):
         return False  # <-- reject if a hard-locked attribute is missing
 
-    # 1b) single-unmet rule: if exactly one attribute is still unmet, require it
+    # single-unmet rule: if exactly one attribute is still unmet, require it
     unmet = [j for j, need in r.items() if need > 0]
     if len(unmet) == 1 and candidate.get(unmet[0], 0) == 0:
         return False
 
-    # 2) mandatory pair guardrail
+    # mandatory pair guardrail
     attrs = ["T", "W", "C", "B"]
     for i in range(len(attrs)):
         for j in range(i + 1, len(attrs)):
@@ -87,7 +61,7 @@ def decide(candidate):  # candidate is a dict {"T":0/1, "W":0/1, "C":0/1, "B":0/
             if need_pair > 0 and candidate.get(ni, 0) == 0 and candidate.get(nj, 0) == 0:
                 return False
 
-    # 3) greedy accept
+    # greedy accept
     accepted += 1
     for j in MIN_REQ:
         if candidate.get(j, 0) == 1:
