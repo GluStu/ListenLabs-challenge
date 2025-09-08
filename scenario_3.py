@@ -1,7 +1,9 @@
+# Same logic as scenario 2, just scaled for 6 attributes
+
 import requests
 
 BASE_URL = "https://berghain.challenges.listenlabs.ai"
-PLAYER_ID = "58d7599f-44a1-46b3-937d-8a23a69a45bd"
+PLAYER_ID = "" #Your player ID
 SCENARIO = 3
 person_index = 0
 
@@ -29,7 +31,6 @@ except Exception as e:
     print("Failed to get first person:", e)
     exit(1)
 
-# attributes in order: T, W, C, B
 MIN_REQ = {"U": 500, "I": 650, "F": 550, "Q": 250, "V": 200, "G": 800}
 K = 1000
 
@@ -42,17 +43,17 @@ def decide(candidate):
     S = K - accepted
     r = {j: max(0, MIN_REQ[j] - acc_attr[j]) for j in MIN_REQ}
 
-    # 1) hard locks: if any attribute needs exactly S more, it is mandatory
+    # hard locks: if any attribute needs exactly S more, it is mandatory
     locked = [j for j in r if r[j] == S and r[j] > 0]
     if locked and not all(candidate.get(j, 0) == 1 for j in locked):
-        return False  # <-- reject if a hard-locked attribute is missing
+        return False
 
-    # 1b) single-unmet rule: if exactly one attribute is still unmet, require it
+    # single-unmet rule: if exactly one attribute is still unmet, require it
     unmet = [j for j, need in r.items() if need > 0]
     if len(unmet) == 1 and candidate.get(unmet[0], 0) == 0:
         return False
 
-    # 2) mandatory pair guardrail
+    # mandatory pair guardrail
     attrs = ["U", "I", "F", "Q", "V", "G"]
     for i in range(len(attrs)):
         for j in range(i + 1, len(attrs)):
@@ -61,7 +62,7 @@ def decide(candidate):
             if need_pair > 0 and candidate.get(ni, 0) == 0 and candidate.get(nj, 0) == 0:
                 return False
 
-    # 3) greedy accept
+    # greedy accept
     accepted += 1
     for j in MIN_REQ:
         if candidate.get(j, 0) == 1:
@@ -83,7 +84,6 @@ while True:
         decision = "accept" if accept else "reject"
 
         print(f"[{current_person['personIndex']}] underground: {underground_veteran}, international: {international}, fashion: {fashion_forward}, queer: {queer_friendly}, vinyl: {vinyl_collector}, german: {german_speaker} => {decision}")
-
 
         url = f"{BASE_URL}/decide-and-next?gameId={game_id}&personIndex={person_index}&accept={str(accept).lower()}"
         res = requests.get(url)
