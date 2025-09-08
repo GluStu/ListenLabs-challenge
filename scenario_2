@@ -1,7 +1,7 @@
 import requests
 
 BASE_URL = "https://berghain.challenges.listenlabs.ai"
-PLAYER_ID = "58d7599f-44a1-46b3-937d-8a23a69a45bd"
+PLAYER_ID = "" #Your player ID
 SCENARIO = 2
 person_index = 0
 
