@@ -36,7 +36,7 @@ K = 1000
 accepted = 0
 acc_attr = {"T": 0, "W": 0, "C": 0, "B": 0}
 
-def decide(candidate):  # candidate is a dict {"T":0/1, "W":0/1, "C":0/1, "B":0/1}
+def decide(candidate):
     global accepted, acc_attr
 
     S = K - accepted
@@ -45,7 +45,7 @@ def decide(candidate):  # candidate is a dict {"T":0/1, "W":0/1, "C":0/1, "B":0/
     # hard locks: if any attribute needs exactly S more, it is mandatory
     locked = [j for j in r if r[j] == S and r[j] > 0]
     if locked and not all(candidate.get(j, 0) == 1 for j in locked):
-        return False  # <-- reject if a hard-locked attribute is missing
+        return False
 
     # single-unmet rule: if exactly one attribute is still unmet, require it
     unmet = [j for j, need in r.items() if need > 0]
@@ -96,3 +96,4 @@ while True:
     except Exception as e:
         print("Unexpected error:", e)
         break
+
