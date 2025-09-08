@@ -1,3 +1,5 @@
+# Pretty basic logic used here. If you want can downscale the logic for scen 2 but it wont be as neat for this as heat and trial witht this strat yeilded better results for me
+
 import requests 
 
 BASE_URL = "https://berghain.challenges.listenlabs.ai"
@@ -64,3 +66,4 @@ while True:
     except Exception as e:
         print("Unexpected error:", e)
         break
+
