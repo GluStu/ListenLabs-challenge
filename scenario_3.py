@@ -53,8 +53,8 @@ def decide(candidate):
     # 1) hard locks: if any attribute needs exactly S more, it is mandatory
     locked = [j for j in r if r[j] == S and r[j] > 0]
     if locked and not all(candidate.get(j, 0) == 1 for j in locked):
-        return False  # <-- reject if a hard-locked attribute is missing
-
+        return False
+        
     # 1b) single-unmet rule: if exactly one attribute is still unmet, require it
     unmet = [j for j, need in r.items() if need > 0]
     if len(unmet) == 1 and candidate.get(unmet[0], 0) == 0:
@@ -121,3 +121,4 @@ while True:
     except Exception as e:
         print("Unexpected error:", e)
         break
+
