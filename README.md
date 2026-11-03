@@ -14,5 +14,12 @@ You're the bouncer at a night club. Your goal is to fill the venue with N=1000 p
 
 
 ## Scenarios & Scoring
-There are 3 different scenarios. For each, you are given a list of constraints and statistics on the attribute distribution. You can assume, participants are sampled i.i.d., meaning the attribute distribution will not change as the night goes on. You know the overall relative frequency of each attribute and the correlation between attributes. You don't know the exact distribution.
+There are 3 different scenarios. For each, you are given a list of constraints and statistics on the attribute distribution. You can assume participants are sampled i.i.d., meaning the attribute distribution will not change as the night goes on. You know the overall relative frequency of each attribute and the correlation between attributes. You don't know the exact distribution.
 You score is the number of people you rejected before filling the venue (the less the better).
+
+## Ouptcome
+It was a bit luck-based (at least my strategy). Wanted to finish top 100, reached 97 towards the end; by the time all of the people completed their simulations, I was pushed back to 125. 🙃
+
+<img width="908" height="67" alt="image" src="https://github.com/user-attachments/assets/1c97b8be-1bd3-40d6-8553-76a9a23c8940" />
+
+Overall, great exp,,, 10/10 will do it again
